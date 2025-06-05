@@ -162,9 +162,10 @@ func (p *cliProgress) output(col *color.Color, msg string) {
 	}
 
 	if msg != "" {
-		prefix := "\n ! "
-		if !p.enableProgress {
-			prefix = ""
+		prefix := ""
+		if p.enableProgress {
+			// "\x1b[K" clears from cursor to end of line.
+			prefix = "\r\x1b[K ! "
 		}
 
 		col.Fprintf(p.out.stderr(), "%v%v", prefix, msg) //nolint:errcheck
